@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 
 // utils
 import { fetchData } from "../../utils/fetchData";
@@ -33,8 +33,8 @@ const Table = () => {
 
   findAndAddProp(accounts, accTypes);
 
-  const sortByName = (e) => {
-    console.log('name');
+  const sortByName = e => {
+    console.log("name");
     if (e.shiftKey && isProfitSorted) {
       sortMultiple();
       setNameSorted(!isNameSorted);
@@ -47,8 +47,8 @@ const Table = () => {
     }
   };
 
-  const sortByProfit = (e) => {
-    console.log('profit');
+  const sortByProfit = e => {
+    console.log("profit");
     if (e.shiftKey && isNameSorted) {
       sortMultiple();
       setProfitSorted(!isProfitSorted);
@@ -66,7 +66,7 @@ const Table = () => {
   };
 
   const sortMultiple = () => {
-    console.log('multiple');
+    console.log("multiple");
     const stateAccs = [...accounts];
     stateAccs.sort((a, b) => {
       if (
@@ -86,26 +86,35 @@ const Table = () => {
   };
 
   return (
-    <table className="table">
-      <thead>
-        <tr>
-          <th scope="col" className="clickable" onClick={sortByName}>
-            {isNameSorted ? "↓" : "↑"} Name
-          </th>
-          <th scope="col" className="clickable" onClick={sortByProfit}>
-            {isProfitSorted ? "↓" : "↑"} Profit & Loss
-          </th>
-          <th scope="col">Account Type</th>
-        </tr>
-      </thead>
-      <tbody>
-        {accounts.length > 1 ? (
-          <Cell accounts={accounts} />
-        ) : (
-          <WrappedPreloader />
-        )}
-      </tbody>
-    </table>
+    <Fragment>
+      <h2>To sort multiple columns, press shift key and select 2 columns</h2>
+      <p>It matters, what column you will choose first</p>
+      <table className="table">
+        <thead>
+          <tr>
+            <th
+              scope="col"
+              className="clickable"
+              onClick={sortByName}
+              data-testid="name"
+            >
+              {isNameSorted ? "↓" : "↑"} Name
+            </th>
+            <th scope="col" className="clickable" onClick={sortByProfit} data-testid="profit">
+              {isProfitSorted ? "↓" : "↑"} Profit & Loss
+            </th>
+            <th scope="col">Account Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          {accounts.length > 1 ? (
+            <Cell accounts={accounts} />
+          ) : (
+            <WrappedPreloader />
+          )}
+        </tbody>
+      </table>
+    </Fragment>
   );
 };
 

@@ -6,4 +6,5 @@ export const findAndAddProp = (arr1, arr2) => {
       }
     });
   });
+  return arr1;
 };
